@@ -27,13 +27,13 @@ func (c *UserController) GetAllUsers(ctx *gin.Context) {
 }
 
 func (c *UserController) GetUserByID(ctx *gin.Context){
-	id, err := strconv.Atoi(ctx.Param("id"))
+	id_user, err := strconv.Atoi(ctx.Param("id_user"))
 	if err != nil{
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
 		return
 	}
 
-	user, err := c.UserRepo.GetUserByID(uint(id))
+	user, err := c.UserRepo.GetUserByID(uint(id_user))
 	if err != nil{
 		ctx.JSON(http.StatusNotFound, gin.H{"error": "User Not Found"})
 		return
@@ -58,7 +58,7 @@ func (c *UserController) CreateUser(ctx *gin.Context) {
 }
 
 func (c *UserController) UpdateUser(ctx *gin.Context) {
-	id, err := strconv.Atoi(ctx.Param("id"))
+	id_user, err := strconv.Atoi(ctx.Param("id_user"))
 	if err != nil{
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
 		return
@@ -70,7 +70,7 @@ func (c *UserController) UpdateUser(ctx *gin.Context) {
 		return
 	}
 
-	user.ID = uint(id)
+	user.ID = uint(id_user)
 
 	if err := c.UserRepo.UpdateUser(&user); err != nil{
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -81,13 +81,13 @@ func (c *UserController) UpdateUser(ctx *gin.Context) {
 }
 
 func (c *UserController) DeleteUser(ctx *gin.Context){
-	id, err := strconv.Atoi(ctx.Param("id"))
+	id_user, err := strconv.Atoi(ctx.Param("id_user"))
 	if err != nil{
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
 		return
 	}
 
-	if err := c.UserRepo.DeleteUser(uint(id)); err != nil{
+	if err := c.UserRepo.DeleteUser(uint(id_user)); err != nil{
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
