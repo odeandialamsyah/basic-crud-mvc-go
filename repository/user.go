@@ -20,9 +20,9 @@ func (r *UserRepository) GetAllUsers() ([]models.User, error){
 	return users, err
 }
 
-func (r *UserRepository) GetUserByID(id_user uint) (models.User, error){
+func (r *UserRepository) GetUserByID(id_users uint) (models.User, error){
 	var user models.User
-	err := r.DB.First(&user, id_user).Error
+	err := r.DB.First(&user,"id_users = ?", id_users).Error
 	return user, err
 }
 
@@ -31,9 +31,12 @@ func (r *UserRepository) CreateUser(user *models.User) error{
 }
 
 func (r *UserRepository) UpdateUser(user *models.User) error{
-	return r.DB.Save(user).Error
+	return r.DB.Model(user).Updates(map[string]interface{}{
+		"name": user.Name,
+		"email": user.Email,
+	}).Error
 }
 
-func (r *UserRepository) DeleteUser(id_user uint) error{
-	return r.DB.Delete(&models.User{}, id_user).Error
+func (r *UserRepository) DeleteUser(id_users uint) error{
+	return r.DB.Delete(&models.User{}, "id_users", id_users).Error
 }
