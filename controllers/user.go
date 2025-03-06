@@ -70,7 +70,7 @@ func (c *UserController) UpdateUser(ctx *gin.Context) {
 		return
 	}
 
-	user.ID = uint(id_user)
+	user.IDUser = uint(id_user)
 
 	if err := c.UserRepo.UpdateUser(&user); err != nil{
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
